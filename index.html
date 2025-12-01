@@ -6,173 +6,117 @@
 <title>Álbum Familiar</title>
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  margin: 0;
-  padding: 20px;
-}
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f0f0f0;
+    }
 
-/* ---- GRID RESPONSIVE ---- */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 14px;
-  margin-top: 25px;
-}
-.gallery figure {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px #0002;
-  margin: 0;
-}
-.gallery img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-.gallery figcaption {
-  padding: 8px;
-  font-size: 13px;
-  color: #555;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
+    h1 {
+        text-align: center;
+        padding: 20px 0;
+        margin: 0;
+        background: #222;
+        color: #fff;
+    }
 
-/* ---- DRAG & DROP ---- */
-.dropzone {
-  border: 2px dashed #bbb;
-  border-radius: 14px;
-  padding: 35px;
-  text-align: center;
-  transition: background 0.2s;
-  cursor: pointer;
-  background: #fafafa;
-  margin-bottom: 20px;
-}
-.dropzone.dragover {
-  background: #e8f5ff;
-  border-color: #2196f3;
-}
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 10px;
+        padding: 15px;
+    }
 
-/* ---- PREVIEWS ---- */
-.preview-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 12px;
-  margin-top: 15px;
-}
-.preview {
-  position: relative;
-}
-.preview img {
-  width: 100%;
-  height: 130px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-.preview button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: #fff;
-  border: none;
-  border-radius: 50%;
-  padding: 4px 8px;
-  cursor: pointer;
-}
+    .gallery img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Caja para subir imágenes */
+    .upload-box {
+        background: white;
+        margin: 15px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="file"] {
+        margin-top: 10px;
+    }
+
+    .note {
+        font-size: 13px;
+        color: #666;
+        margin-top: 10px;
+    }
 </style>
 </head>
 
 <body>
 
-<h1>📸 Álbum Familiar</h1>
-<p>Galería automática desde <code>/imagenes/Fotos</code> del repositorio.</p>
+<h1>Álbum Familiar 📸</h1>
 
-<!-- DRAG & DROP -->
-<div id="dropzone" class="dropzone">
-  Arrastra imágenes aquí o haz clic para seleccionar.
+<div class="upload-box">
+    <h3>Subir nueva foto al álbum</h3>
+    <p><b>NOTA:</b> GitHub no permite subir imágenes automáticamente desde un formulario.  
+    Este botón solo sirve para seleccionar la imagen y obtener una vista previa.  
+    Para añadirla al repositorio, debes subirla manualmente a <code>imagenes/</code> desde GitHub.</p>
+
+    <input type="file" id="fileInput" accept="image/*">
+    <div id="preview"></div>
+
+    <p class="note">Después de seleccionar la foto → súbela manualmente a la carpeta <code>imagenes/</code> en el repositorio.</p>
 </div>
 
-<input id="fileInput" type="file" accept="image/*" multiple style="display:none" />
-
-<div id="previewContainer" class="preview-grid"></div>
-
-<hr />
-
-<h2>Galería</h2>
-<div id="gallery" class="gallery"></div>
+<div class="gallery" id="gallery"></div>
 
 <script>
-const repoOwner = "KATO250712";
-const repoName  = "AlbumFamiliar";
-const repoPath  = "imagenes/Fotos";
-const branch    = "main";
+/* Cargar imágenes automáticamente */
+async function loadImages() {
+    const repoUser = "KATO250712";
+    const repoName = "AlbumFamiliar";
+    const folderPath = "imagenes";
 
-const gallery = document.getElementById("gallery");
-const dropzone = document.getElementById("dropzone");
-const fileInput = document.getElementById("fileInput");
-const previewContainer = document.getElementById("previewContainer");
+    const apiURL = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${folderPath}`;
 
-/* ------------ CARGAR LISTA DEL REPO  ------------ */
-async function loadGallery() {
-  const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${repoPath}?ref=${branch}`;
-  const res = await fetch(url);
-  const data = await res.json();
+    const res = await fetch(apiURL);
+    const files = await res.json();
 
-  gallery.innerHTML = "";
+    const gallery = document.getElementById("gallery");
 
-  data
-    .filter(f => /\.(png|jpg|jpeg|gif|webp)$/i.test(f.name))
-    .reverse()
-    .forEach(f => {
-      const fig = document.createElement("figure");
-      fig.innerHTML = `
-        <img src="${f.download_url}" />
-        <figcaption>${f.name}</figcaption>
-      `;
-      gallery.appendChild(fig);
+    files.forEach(file => {
+        if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+            const img = document.createElement("img");
+            img.src = file.download_url;
+            gallery.appendChild(img);
+        }
     });
 }
 
-loadGallery();
+/* Vista previa de imagen a subir */
+document.getElementById("fileInput").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
 
-/* ------------ DRAG & DROP + PREVIEW ------------ */
-dropzone.onclick = () => fileInput.click();
-
-dropzone.addEventListener("dragover", e => {
-  e.preventDefault();
-  dropzone.classList.add("dragover");
-});
-dropzone.addEventListener("dragleave", () =>
-  dropzone.classList.remove("dragover")
-);
-dropzone.addEventListener("drop", e => {
-  e.preventDefault();
-  dropzone.classList.remove("dragover");
-  const files = Array.from(e.dataTransfer.files);
-  showPreviews(files);
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+        document.getElementById("preview").innerHTML =
+            `<img src="${ev.target.result}" style="width:200px;margin-top:10px;border-radius:8px;">`;
+    };
+    reader.readAsDataURL(file);
 });
 
-fileInput.onchange = e => {
-  const files = Array.from(e.target.files);
-  showPreviews(files);
-};
-
-function showPreviews(files) {
-  files.forEach(file => {
-    const url = URL.createObjectURL(file);
-    const div = document.createElement("div");
-    div.className = "preview";
-    div.innerHTML = `
-      <img src="${url}" />
-      <button onclick="this.parentElement.remove()">✕</button>
-    `;
-    previewContainer.appendChild(div);
-  });
-}
+loadImages();
 </script>
 
 </body>
