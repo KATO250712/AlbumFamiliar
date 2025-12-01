@@ -10,107 +10,98 @@
         font-family: "Segoe UI", Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background: #f1f1f1;
+        background: #f6f5f2;
         color: #333;
     }
 
     header {
-        background: linear-gradient(135deg, #1f1f1f, #3a3a3a);
+        background: linear-gradient(135deg, #2b2b2b, #444);
         color: #fff;
         text-align: center;
-        padding: 32px 15px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+        padding: 30px 15px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
     }
 
     header h1 {
         margin: 0;
-        font-size: 2.3rem;
-        letter-spacing: 1px;
+        font-size: 2.1rem;
+        letter-spacing: .5px;
     }
 
     header p {
-        margin: 10px 0 0;
-        font-size: 1.05rem;
+        margin: 8px 0 0;
+        font-size: 1rem;
         opacity: 0.95;
     }
 
     .intro {
-        max-width: 850px;
-        margin: 28px auto;
-        padding: 0 25px;
-        font-size: 1.05rem;
-        color: #444;
+        max-width: 880px;
+        margin: 22px auto;
+        padding: 0 24px;
+        font-size: 1.02rem;
+        color: #4a4a48;
         text-align: center;
         line-height: 1.7;
     }
 
-    .intro span {
-        font-weight: bold;
-        color: #222;
-    }
+    .intro strong { color: #2b2b2b; }
 
-    /* ===== SECCIÓN VIDEOS ===== */
     .videos-section {
-        padding: 20px;
-        margin-top: 5px;
+        padding: 18px;
+        margin-top: 6px;
     }
 
     .videos-section h2 {
-        margin: 0 0 15px 5px;
-        font-size: 1.4rem;
-        color: #222;
+        margin: 0 0 12px 5px;
+        font-size: 1.25rem;
+        color: #2b2b2b;
     }
 
     .video-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-        gap: 15px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 12px;
     }
 
     .video-grid video {
         width: 100%;
         height: 160px;
-        border-radius: 12px;
+        border-radius: 10px;
         object-fit: cover;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.12);
         cursor: pointer;
-        transition: all 0.35s ease;
+        transition: transform 0.28s;
     }
 
-    .video-grid video:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.25);
-    }
+    .video-grid video:hover { transform: translateY(-4px); }
 
-    /* ===== GALERÍA ===== */
     .gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 12px;
-        padding: 20px;
-        margin-top: 10px;
+        padding: 18px;
+        margin-top: 14px;
     }
 
     .gallery-item img {
         width: 100%;
-        height: 190px;
+        height: 185px;
         object-fit: cover;
         border-radius: 10px;
-        transition: all 0.3s ease;
+        transition: transform .25s, box-shadow .25s;
         cursor: pointer;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.10);
     }
 
     .gallery-item:hover img {
-        transform: scale(1.05);
-        box-shadow: 0 5px 18px rgba(0,0,0,0.28);
+        transform: scale(1.04);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.18);
     }
 
-    /* ===== LIGHTBOX ===== */
     .lightbox {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.88);
+        background: rgba(0,0,0,0.86);
         display: none;
         justify-content: center;
         align-items: center;
@@ -119,7 +110,7 @@
     }
 
     .lightbox-content {
-        max-width: 90%;
+        max-width: 92%;
         max-height: 88%;
     }
 
@@ -127,27 +118,25 @@
     .lightbox-content img {
         width: 100%;
         height: auto;
-        border-radius: 12px;
+        border-radius: 10px;
     }
 
-    .lightbox span {
+    .lightbox .close {
         position: absolute;
-        top: 20px;
-        right: 35px;
-        color: white;
-        font-size: 45px;
+        top: 18px;
+        right: 28px;
+        color: #fff;
+        font-size: 42px;
         cursor: pointer;
-        font-family: Arial;
     }
 
     footer {
         text-align: center;
-        padding: 20px;
-        margin-top: 25px;
-        background: #fafafa;
-        color: #777;
-        font-size: 0.9rem;
-        border-top: 1px solid #ddd;
+        padding: 18px;
+        background: #fbf9f7;
+        color: #6d6a67;
+        font-size: 0.95rem;
+        border-top: 1px solid #e9e6e3;
     }
 </style>
 </head>
@@ -155,23 +144,23 @@
 <body>
 
 <header>
-    <h1>Álbum Familiar 📸</h1>
-    <p>Un espacio para guardar lo que vale la pena recordar</p>
+    <h1>Álbum Familiar</h1>
+    <p>Un lugar tranquilo para guardar lo que importa</p>
 </header>
 
 <div class="intro">
-    Este álbum existe para conservar momentos que dan sentido a nuestra historia.  
-    Aquí se guarda lo que somos como familia: <span>amor, aprendizajes, etapas y recuerdos</span>.  
+    Este espacio está pensado con calma y respeto.  
+    Aquí guardo fotos y videos para que nuestro hijo <strong>Miguel</strong> pueda conocer su historia cuando sea mayor.  
     <br><br>
-    Dedicado especialmente a <span>Miguelito</span>, para que cuando crezca pueda ver de dónde viene.
-    Y para la familia, como testimonio de lo bonito que se ha vivido y lo que aún está por construirse.  
+    Es un archivo de recuerdos: momentos sencillos, risas, aprendizajes y pasos que nos formaron.  
+    No busca señalar ni herir; solo preservar y acompañar la memoria con amor y paz.
     <br><br>
-    Las fotos y videos aquí son parte de un camino compartido, sin ego, sin dolor, solo memoria.
+    Si alguien más quiere aportar alguna foto para el álbum, será bienvenida siempre que sea con respeto y pensando en el bien de Miguel.
 </div>
 
-<!-- VIDEOS -->
+<!-- VIDEOS (se muestran primero) -->
 <div class="videos-section">
-    <h2>Videos 🎥</h2>
+    <h2>Videos</h2>
     <div class="video-grid" id="video-grid"></div>
 </div>
 
@@ -179,71 +168,97 @@
 <div class="gallery" id="gallery"></div>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-    <span onclick="closeLightbox()">&times;</span>
+<div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="close" onclick="closeLightbox()">&times;</div>
     <div class="lightbox-content" id="lightbox-content"></div>
 </div>
 
 <script>
+/* --- CONFIG --- */
+const repoUser = "KATO250712";
+const repoName = "AlbumFamiliar";
+/* carpetas en el repo */
+const videosFolder = "videos";
+const imagesFolder = "imagenes";
+
+/* --- CARGA DE VIDEOS --- */
 async function loadVideos() {
-    const apiURL = "https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/videos";
-    const res = await fetch(apiURL);
-    if (!res.ok) return;
+    try {
+        const api = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${videosFolder}`;
+        const res = await fetch(api);
+        if (!res.ok) return;
+        const files = await res.json();
+        const grid = document.getElementById("video-grid");
 
-    const files = await res.json();
-    const grid = document.getElementById("video-grid");
-
-    files.forEach(file => {
-        if (file.name.match(/\.(mp4|mov|webm)$/i)) {
-            const v = document.createElement("video");
-            v.src = file.download_url;
-            v.autoplay = true;
-            v.muted = true;
-            v.loop = true;
-            v.onclick = () => openLightbox("video", file.download_url);
-            grid.appendChild(v);
-        }
-    });
+        files.forEach(file => {
+            if (file.name.match(/\.(mp4|webm|mov)$/i)) {
+                const v = document.createElement("video");
+                v.src = file.download_url;
+                v.autoplay = true;
+                v.muted = true;
+                v.loop = true;
+                v.playsInline = true;
+                v.setAttribute("aria-label", file.name);
+                v.onclick = () => openLightbox("video", file.download_url);
+                grid.appendChild(v);
+            }
+        });
+    } catch (e) {
+        console.warn("No se pudieron cargar los videos.", e);
+    }
 }
 
+/* --- CARGA DE IMÁGENES --- */
 async function loadImages() {
-    const apiURL = "https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/imagenes";
-    const res = await fetch(apiURL);
-    if (!res.ok) return;
+    try {
+        const api = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${imagesFolder}`;
+        const res = await fetch(api);
+        if (!res.ok) return;
+        const files = await res.json();
+        const gallery = document.getElementById("gallery");
 
-    const files = await res.json();
-    const gallery = document.getElementById("gallery");
-
-    files.forEach(file => {
-        if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
-            const item = document.createElement("div");
-            item.classList.add("gallery-item");
-            item.innerHTML = `<img src="${file.download_url}" />`;
-            item.onclick = () => openLightbox("img", file.download_url);
-            gallery.appendChild(item);
-        }
-    });
+        files.forEach(file => {
+            if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+                const item = document.createElement("div");
+                item.className = "gallery-item";
+                const img = document.createElement("img");
+                img.src = file.download_url;
+                img.alt = file.name;
+                img.onclick = () => openLightbox("img", file.download_url);
+                item.appendChild(img);
+                gallery.appendChild(item);
+            }
+        });
+    } catch (e) {
+        console.warn("No se pudieron cargar las imágenes.", e);
+    }
 }
 
+/* --- LIGHTBOX --- */
 function openLightbox(type, src) {
     const content = document.getElementById("lightbox-content");
     content.innerHTML = type === "img"
-        ? `<img src="${src}">`
+        ? `<img src="${src}" alt="">`
         : `<video src="${src}" controls autoplay></video>`;
-    document.getElementById("lightbox").style.display = "flex";
+    const lb = document.getElementById("lightbox");
+    lb.style.display = "flex";
+    lb.setAttribute("aria-hidden", "false");
 }
 
 function closeLightbox() {
-    document.getElementById("lightbox").style.display = "none";
+    const lb = document.getElementById("lightbox");
+    lb.style.display = "none";
+    lb.setAttribute("aria-hidden", "true");
     document.getElementById("lightbox-content").innerHTML = "";
 }
 
+/* --- INICIALIZAR --- */
 loadVideos();
 loadImages();
 </script>
 
 <footer>
-    "Todo tiene su tiempo, y todo lo que se quiere debajo del cielo tiene su hora." — Eclesiastés 3:1
+    Guardado con respeto y paz — para Miguel, con cariño.
 </footer>
 
 </body>
