@@ -41,11 +41,45 @@
         line-height: 1.5;
     }
 
+    /* ==== SECCIÓN DESTACADA DE VIDEOS ==== */
+    .videos-section {
+        padding: 15px;
+        margin-top: 10px;
+    }
+
+    .videos-section h2 {
+        margin: 0 0 10px 5px;
+        font-size: 1.3rem;
+        color: #333;
+    }
+
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 12px;
+    }
+
+    .video-grid video {
+        width: 100%;
+        height: 160px;
+        border-radius: 10px;
+        object-fit: cover;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .video-grid video:hover {
+        transform: scale(1.04);
+    }
+
+    /* ==== GALERÍA DE IMÁGENES ==== */
     .gallery {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
         gap: 10px;
         padding: 15px;
+        margin-top: 20px;
     }
 
     .gallery-item {
@@ -53,7 +87,7 @@
         cursor: pointer;
     }
 
-    .gallery img, .gallery video {
+    .gallery img {
         width: 100%;
         height: 180px;
         object-fit: cover;
@@ -61,22 +95,9 @@
         transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .gallery-item:hover img,
-    .gallery-item:hover video {
+    .gallery-item:hover img {
         transform: scale(1.05);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-
-    /* Icono de play para videos */
-    .play-icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 45px;
-        color: white;
-        text-shadow: 0px 0px 10px black;
-        pointer-events: none;
     }
 
     /* Lightbox */
@@ -96,7 +117,8 @@
         max-height: 85%;
     }
 
-    .lightbox-content video, .lightbox-content img {
+    .lightbox-content video, 
+    .lightbox-content img {
         width: 100%;
         height: auto;
         border-radius: 10px;
@@ -139,18 +161,54 @@
     está en las pequeñas cosas que vivimos juntos.
 </div>
 
+<!-- ==== SECCIÓN DE VIDEOS ==== -->
+<div class="videos-section">
+    <h2>Videos 🎥</h2>
+    <div class="video-grid" id="video-grid"></div>
+</div>
+
+<!-- ==== GALERÍA DE IMÁGENES ==== -->
 <div class="gallery" id="gallery"></div>
 
+<!-- Lightbox -->
 <div class="lightbox" id="lightbox">
     <span onclick="closeLightbox()">&times;</span>
     <div class="lightbox-content" id="lightbox-content"></div>
 </div>
 
 <script>
-async function loadMedia(folder) {
+async function loadVideos() {
     const repoUser = "KATO250712";
     const repoName = "AlbumFamiliar";
-    const apiURL = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${folder}`;
+    const folderPath = "videos";
+
+    const apiURL = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${folderPath}`;
+
+    const res = await fetch(apiURL);
+    if (!res.ok) return;
+    const files = await res.json();
+
+    const videoGrid = document.getElementById("video-grid");
+
+    files.forEach(file => {
+        if (file.name.match(/\.(mp4|webm|mov)$/i)) {
+            const video = document.createElement("video");
+            video.src = file.download_url;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.onclick = () => openLightbox("video", file.download_url);
+            videoGrid.appendChild(video);
+        }
+    });
+}
+
+async function loadImages() {
+    const repoUser = "KATO250712";
+    const repoName = "AlbumFamiliar";
+    const folderPath = "imagenes";
+
+    const apiURL = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${folderPath}`;
 
     const res = await fetch(apiURL);
     if (!res.ok) return;
@@ -159,40 +217,25 @@ async function loadMedia(folder) {
     const gallery = document.getElementById("gallery");
 
     files.forEach(file => {
-        const isImage = file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i);
-        const isVideo = file.name.match(/\.(mp4|webm|mov)$/i);
+        if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+            const item = document.createElement("div");
+            item.classList.add("gallery-item");
 
-        if (!isImage && !isVideo) return;
-
-        const item = document.createElement("div");
-        item.classList.add("gallery-item");
-
-        if (isImage) {
             item.innerHTML = `<img src="${file.download_url}">`;
             item.onclick = () => openLightbox("img", file.download_url);
-        }
 
-        if (isVideo) {
-            item.innerHTML = `
-                <video src="${file.download_url}" muted></video>
-                <div class="play-icon">▶</div>
-            `;
-            item.onclick = () => openLightbox("video", file.download_url);
+            gallery.appendChild(item);
         }
-
-        gallery.appendChild(item);
     });
 }
 
 function openLightbox(type, src) {
     const content = document.getElementById("lightbox-content");
-
     if (type === "img") {
         content.innerHTML = `<img src="${src}">`;
     } else {
         content.innerHTML = `<video src="${src}" controls autoplay></video>`;
     }
-
     document.getElementById("lightbox").style.display = "flex";
 }
 
@@ -201,9 +244,10 @@ function closeLightbox() {
     document.getElementById("lightbox-content").innerHTML = "";
 }
 
-/* Cargar imágenes y videos */
-loadMedia("imagenes");  
-loadMedia("videos");     // <- crea esta carpeta en el repo
+/* Cargar videos primero */
+loadVideos();
+/* Luego las imágenes */
+loadImages();
 </script>
 
 <footer>
