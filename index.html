@@ -401,9 +401,11 @@ async function loadImages() {
 function openLightbox(type, src) {
     const content = document.getElementById("lightbox-content");
     if (type === "img") {
-        content.innerHTML = `<img src="${src}">`;
-    } else {
         content.innerHTML = `<video src="${src}" controls autoplay></video>`;
+        
+    } else {
+        content.innerHTML = `<img src="${src}">`;
+        
     }
     document.getElementById("lightbox").style.display = "flex";
 }
