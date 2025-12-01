@@ -343,6 +343,33 @@ loadVideos();
 loadImages();
 </script>-->
 <script>
+async function loadVideosDestacados() {
+    const repoUser = "KATO250712";
+    const repoName = "AlbumFamiliar";
+    const folderPath = "VideosDestacados";
+
+    const apiURL = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${folderPath}`;
+
+    const res = await fetch(apiURL);
+    if (!res.ok) return;
+    const files = await res.json();
+
+    const videoGrid = document.getElementById("video-grid");
+
+    files.forEach(file => {
+        if (file.name.match(/\.(mp4|webm|mov)$/i)) {
+            const video = document.createElement("video");
+            video.src = file.download_url;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.onclick = () => openLightbox("video", file.download_url);
+            videoGrid.appendChild(video);
+        }
+    });
+}
+    
+    
 async function loadVideos() {
     const repoUser = "KATO250712";
     const repoName = "AlbumFamiliar";
@@ -409,7 +436,7 @@ function closeLightbox() {
     document.getElementById("lightbox").style.display = "none";
     document.getElementById("lightbox-content").innerHTML = "";
 }
-
+loadVideosDestacados()()
 
 /*  imágenes */
 loadImages();
