@@ -10,15 +10,35 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background: #f0f0f0;
+        background: #f4f4f4;
     }
 
-    h1 {
-        text-align: center;
-        padding: 20px 0;
-        margin: 0;
+    header {
         background: #222;
         color: #fff;
+        text-align: center;
+        padding: 25px 15px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 2rem;
+    }
+
+    header p {
+        margin: 8px 0 0;
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    .intro {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+        font-size: 1rem;
+        color: #444;
+        text-align: center;
+        line-height: 1.5;
     }
 
     .gallery {
@@ -34,48 +54,80 @@
         object-fit: cover;
         border-radius: 8px;
         cursor: pointer;
-        transition: transform 0.3s;
+        transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .gallery img:hover {
         transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* Caja para subir imágenes */
-    .upload-box {
-        background: white;
-        margin: 15px;
-        padding: 20px;
+    .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    .lightbox img {
+        max-width: 90%;
+        max-height: 85%;
         border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    input[type="file"] {
-        margin-top: 10px;
+    .lightbox span {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
     }
 
-    .note {
-        font-size: 13px;
+    footer {
+        text-align: center;
+        padding: 15px;
         color: #666;
-        margin-top: 10px;
+        font-size: 0.9rem;
+        margin-top: 20px;
     }
 </style>
 </head>
 
 <body>
 
-<h1>Álbum Familiar 📸</h1>
+<header>
+    <h1>Álbum Familiar 📸</h1>
+    <p>Un espacio creado para Miguel, su hijo y Joss</p>
+</header>
 
-
+<div class="intro">
+    Este álbum existe para guardar momentos que no se deben perder.  
+    Son recuerdos hechos con amor, con esfuerzo y con la esperanza de que algún día,
+    cuando todo pase y todo sane, podamos mirar hacia atrás y ver cuánto hemos crecido.  
+    <br><br>
+    Está dedicado a mi hijo, para que cuando sea grande pueda ver su historia.
+    También para Joss, por todos los momentos compartidos.  
+    Y para mí, Miguel, como un recordatorio de que lo más valioso de la vida siempre
+    está en las pequeñas cosas que vivimos juntos.
+</div>
 
 <div class="gallery" id="gallery"></div>
 
+<div class="lightbox" id="lightbox">
+    <span onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img">
+</div>
+
 <script>
-/* Cargar imágenes automáticamente */
+/* Cargar imágenes automáticamente desde GitHub */
 async function loadImages() {
     const repoUser = "KATO250712";
-    const repoName = "AlbumFamiliar";
-    const folderPath = "imagenes";
+    const repoName = "AlbumFamiliar";  // Cambia si tu repo se llama diferente
+    const folderPath = "imagenes";      // Asegúrate que exista esta carpeta
 
     const apiURL = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${folderPath}`;
 
@@ -88,26 +140,28 @@ async function loadImages() {
         if (file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
             const img = document.createElement("img");
             img.src = file.download_url;
+            img.onclick = () => openLightbox(file.download_url);
             gallery.appendChild(img);
         }
     });
 }
 
-/* Vista previa de imagen a subir */
-document.getElementById("fileInput").addEventListener("change", function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+/* Lightbox */
+function openLightbox(src) {
+    document.getElementById("lightbox-img").src = src;
+    document.getElementById("lightbox").style.display = "flex";
+}
 
-    const reader = new FileReader();
-    reader.onload = function(ev) {
-        document.getElementById("preview").innerHTML =
-            `<img src="${ev.target.result}" style="width:200px;margin-top:10px;border-radius:8px;">`;
-    };
-    reader.readAsDataURL(file);
-});
+function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+}
 
 loadImages();
 </script>
+
+<footer>
+    Hecho con amor — Miguel.
+</footer>
 
 </body>
 </html>
