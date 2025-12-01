@@ -175,7 +175,7 @@
 <!-- Lightbox -->
 
 <div class="videos-section">
-    <h2>Videos 🎥</h2>
+    <h2>🎥</h2>
     <div class="video-grid" id="video-grid"></div>
 </div>
 
@@ -186,6 +186,11 @@
     <span onclick="closeLightbox()">&times;</span>
     <div class="lightbox-content" id="lightbox-content"></div>
     </div>
+
+    <div class="videos-section">
+    <h2> mas Videos 🎥</h2>
+    <div class="video-grid" id="video-grid"></div>
+</div>
     <!--
     <script>
 const repoUser = "KATO250712";
@@ -399,6 +404,32 @@ async function loadImages() {
         }
     });
 }
+    async function loadVideos() {
+    const repoUser = "KATO250712";
+    const repoName = "AlbumFamiliar";
+    const folderPath = "Videos";
+
+    const apiURL = `https://api.github.com/repos/${repoUser}/${repoName}/contents/${folderPath}`;
+
+    const res = await fetch(apiURL);
+    if (!res.ok) return;
+    const files = await res.json();
+
+    const videoGrid = document.getElementById("video-grid");
+
+    files.forEach(file => {
+        if (file.name.match(/\.(mp4|webm|mov)$/i)) {
+            const video = document.createElement("video");
+            video.src = file.download_url;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.onclick = () => openLightbox("video", file.download_url);
+            videoGrid.appendChild(video);
+        }
+    });
+}
+    
 
 function openLightbox(type, src) {
     const content = document.getElementById("lightbox-content");
@@ -406,16 +437,21 @@ function openLightbox(type, src) {
         content.innerHTML = `<video src="${src}" controls autoplay></video>`;
         
     } else {
-        content.innerHTML = `<img src="${src}">`;
+        content.innerHTML = `<img src="${src}">`; 
+        
+        else{content.innerHTML = `<video src="${src}" controls autoplay></video>`;
+                                                      
         
     }
     document.getElementById("lightbox").style.display = "flex";
 }
-
+}
 function closeLightbox() {
     document.getElementById("lightbox").style.display = "none";
     document.getElementById("lightbox-content").innerHTML = "";
 }
+
+
 
 /*  imágenes */
 loadImages();
