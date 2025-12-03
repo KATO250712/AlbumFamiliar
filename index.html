@@ -117,10 +117,6 @@
     
     <p> Este repositorio existe para guardar recuerdos que no deben perderse: momentos con mi hijo, con Joss, con mi familia y conmigo mismo. También forma parte de reflexión, crecimiento y recuperación Aquí dejo imágenes, videos y documentos que marcaron etapas importantes de mi vida..</p></div>
 
-  <video class="video-header" autoplay muted loop playsinline>
-    <source src="VideosDestacados/miguelvideos~2.mp4" type="video/mp4">
-  </video>
-
 
     <!-- FOTOS -->
 <div class="gallery" id="gallery"></div>
@@ -146,7 +142,7 @@
 <script>
 // VIDEOS
 async function loadVideos() {
-    const apiURL = "https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/VideosDestacados";
+    const apiURL = "https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/videos";
     const res = await fetch(apiURL);
     if (!res.ok) return;
     const files = await res.json();
