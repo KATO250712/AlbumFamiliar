@@ -222,18 +222,7 @@
     <h2>Videos 🎥</h2>
     <div class="video-grid" id="video-grid"></div>
 </div>
-
-<div class="album-menu-btn" onclick="toggleAlbumMenu()">📂 Álbumes</div>
-
-<div class="album-menu-panel" id="albumMenu">
-  <div class="album-menu-title">Carpetas</div>
-  <div id="albumList"></div>
-</div>
-
-<div id="albumViewer"></div>
-
-<script>
-async function fetchFolders(path) {
+<script>async function fetchFolders(path) {
   const url = `https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/${path}`;
   const res = await fetch(url);
   if (!res.ok) return [];
@@ -300,7 +289,18 @@ function toggleAlbumMenu() {
 // Inicializar menús al cargar
 loadAlbumMenu();
 
-    
+    </script>
+<div class="album-menu-btn" onclick="toggleAlbumMenu()">📂 Álbumes</div>
+
+<div class="album-menu-panel" id="albumMenu">
+  <div class="album-menu-title">Carpetas</div>
+  <div id="albumList"></div>
+</div>
+<div id="albumViewer"></div>
+
+
+<script>
+
     
     // VIDEOS
 async function loadVideos() {
