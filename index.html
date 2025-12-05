@@ -18,7 +18,13 @@
 
     /* VIDEOS */
     .videos-section { padding: 15px; margin-top: 10px;}
-    videos-sectionPortada video{ width: 100%; height: 160px; border-radius: 10px;}
+.video-container video{
+    width: 100%;       /* El video ocupa el 100% del ancho de su contenedor */
+    max-width: 800px;  /* Pero nunca superará los 800px de ancho */
+    height: auto;      /* La altura se ajusta automáticamente para mantener la relación de aspecto */
+    display: block;    /* Centra el video si el contenedor es más grande que 800px */
+    margin: 0 auto;    /* Centra el video si el contenedor es más grande que 800px */
+}
     margin: 0 auto; }
     .videos-section h2 { margin: 0 0 10px 5px; font-size: 1.3rem; color: #333; }
     .video-grid {
@@ -181,7 +187,7 @@
 <header>
     <h2> 📸 Álbum Familiar — Miguel</h2>
     
-    <div class="videos-sectionPortada">
+    <div class="video-container">
        <video class="video-header" autoplay muted loop playsinline>
        <source src="VideosDestacados/petal_20251205_024817.mp4" type="video/mp4">
     </video>
