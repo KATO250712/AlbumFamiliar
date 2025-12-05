@@ -222,7 +222,15 @@
     <h2>Videos 🎥</h2>
     <div class="video-grid" id="video-grid"></div>
 </div>
-    
+
+<div class="album-menu-btn" onclick="toggleAlbumMenu()">📂 Álbumes</div>
+
+<div class="album-menu-panel" id="albumMenu">
+  <div class="album-menu-title">Carpetas</div>
+  <div id="albumList"></div>
+</div>
+
+<div id="albumViewer"></div>
 
 <script>
 async function fetchFolders(path) {
@@ -238,7 +246,7 @@ async function loadAlbumMenu() {
   albumList.innerHTML = "<p>Cargando...</p>";
 
   const fotoFolders = await fetchFolders("fotos");
-  const videoFolders = await fetchFolders("videos");
+  const videoFolders = await fetchFolders("VideosDestacados");
 
   let html = `<strong>📷 Fotos</strong>`;
   fotoFolders.forEach(f => {
@@ -375,14 +383,7 @@ function closeLightbox() {
 }
 
 </script>
- <div class="album-menu-btn" onclick="toggleAlbumMenu()">📂 Álbumes</div>
-
-<div class="album-menu-panel" id="albumMenu">
-  <div class="album-menu-title">Carpetas</div>
-  <div id="albumList"></div>
-</div>
-
-<div id="albumViewer"></div>
+ 
 <footer>
 
      <p> "Todo lo que te viniere a la mano para hacer, hazlo según tus fuerzas." — Eclesiastés 9:10</p>
