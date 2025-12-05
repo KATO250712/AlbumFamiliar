@@ -216,12 +216,12 @@
     <span onclick="closeLightbox()">&times;</span>
     <div class="lightbox-content2" id="lightbox-content2"></div>
 </div>
-
-    <!-- VIDEOS -->
-    <div class="videos-section">
-    <h2>Videos 🎥</h2>
-    <div class="video-grid" id="video-grid"></div>
+ <!-- VIDEOS -->
+<div class="videos-section">
+<h2>Videos 🎥</h2>
+<div class="video-grid" id="video-grid"></div>
 </div>
+
 <script>async function fetchFolders(path) {
   const url = `https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/${path}`;
   const res = await fetch(url);
