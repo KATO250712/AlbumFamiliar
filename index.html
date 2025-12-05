@@ -21,9 +21,13 @@
 .video-container video{
     width: 100%;       /* El video ocupa el 100% del ancho de su contenedor */
     max-width: 800px;  /* Pero nunca superará los 800px de ancho */
-    height: auto;      /* La altura se ajusta automáticamente para mantener la relación de aspecto */
+    /* La altura se ajusta automáticamente para mantener la relación de aspecto */
     display: block;    /* Centra el video si el contenedor es más grande que 800px */
     margin: 0 auto;    /* Centra el video si el contenedor es más grande que 800px */
+    
+         height: 160px; border-radius: 10px;
+        object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        cursor: pointer; transition: transform 0.3s;
 }
     margin: 0 auto; }
     .videos-section h2 { margin: 0 0 10px 5px; font-size: 1.3rem; color: #333; }
