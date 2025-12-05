@@ -216,13 +216,11 @@
     <span onclick="closeLightbox()">&times;</span>
     <div class="lightbox-content2" id="lightbox-content2"></div>
 </div>
- <!-- VIDEOS -->
-<div class="videos-section">
-<h2>Videos 🎥</h2>
-<div class="video-grid" id="video-grid"></div>
-</div>
 
-<script>async function fetchFolders(path) {
+
+<script>
+    
+    async function fetchFolders(path) {
   const url = `https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/${path}`;
   const res = await fetch(url);
   if (!res.ok) return [];
@@ -289,7 +287,7 @@ function toggleAlbumMenu() {
 // Inicializar menús al cargar
 loadAlbumMenu();
 
-    </script>
+    
 <div class="album-menu-btn" onclick="toggleAlbumMenu()">📂 Álbumes</div>
 
 <div class="album-menu-panel" id="albumMenu">
@@ -298,11 +296,8 @@ loadAlbumMenu();
 </div>
 <div id="albumViewer"></div>
 
-
-<script>
-
+    <script>
     
-    // VIDEOS
 async function loadVideos() {
     const apiURL = "https://api.github.com/repos/KATO250712/AlbumFamiliar/contents/videos";
     const res = await fetch(apiURL);
@@ -383,7 +378,11 @@ function closeLightbox() {
 }
 
 </script>
- 
+  <!-- VIDEOS -->
+<div class="videos-section">
+<h2>Videos 🎥</h2>
+<div class="video-grid" id="video-grid"></div>
+</div>
 <footer>
 
      <p> "Todo lo que te viniere a la mano para hacer, hazlo según tus fuerzas." — Eclesiastés 9:10</p>
